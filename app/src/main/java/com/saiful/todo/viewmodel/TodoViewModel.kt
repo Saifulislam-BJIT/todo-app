@@ -9,7 +9,7 @@ import java.util.*
 class TodoViewModel: ViewModel() {
 
     var todoList = MutableLiveData<ArrayList<Todo>>()
-    private val todos = arrayListOf<Todo>()
+    val todos = arrayListOf<Todo>()
 
     fun add(title: String) {
         val todo = Todo(title, false, getTime())

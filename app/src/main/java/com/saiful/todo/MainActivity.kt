@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.saiful.todo.adapter.TodoRecyclerAdapter
@@ -35,6 +36,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         initializeAdapter()
+        val onSwipeToDeleteCallback = object : SwipeToDeleteCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val pos = viewHolder.adapterPosition
+                viewModel.todos.removeAt(pos)
+                Toast.makeText(this@MainActivity, "Sample Toast", Toast.LENGTH_SHORT).show()
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(onSwipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
     }
 
     private fun initializeAdapter() {
